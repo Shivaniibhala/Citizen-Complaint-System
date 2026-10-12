@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Portal - Complaint System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="dark-theme">
+    
+    <nav class="global-nav">
+        <a href="index.html" class="nav-brand">CitizenPortal</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="department.html" class="nav-link active">Department Portal</a>
+        </div>
+        <button onclick="window.logout()" class="btn-secondary" style="border-color:#ef4444; color:#ef4444; padding:0.4rem 1rem;">Logout</button>
+    </nav>
+
+    <div class="container admin-container">
+        <header class="admin-header glass-card">
+            <div>
+                <h1 style="color:var(--text-light); margin-bottom:0.5rem;"><span id="deptNameDisplay" style="color:var(--accent-primary);">Department</span> Center</h1>
+                <p style="color:var(--text-muted);">Manage and resolve actively routed complaints</p>
+            </div>
+            <div class="stats-grid" style="margin-top:1.5rem; gap:1rem;">
+                <div class="stat-card glass-card" style="padding:1rem;">
+                    <div class="stat-value" id="deptTotal" style="color: var(--accent-primary); font-size:1.8rem;">0</div>
+                    <div class="stat-label">Assigned Traffic</div>
+                </div>
+                <div class="stat-card glass-card" style="padding:1rem;">
+                    <div class="stat-value" id="deptPending" style="color:#facc15; font-size:1.8rem;">0</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+                <div class="stat-card glass-card" style="padding:1rem;">
+                    <div class="stat-value" id="deptResolved" style="color:#4ade80; font-size:1.8rem;">0</div>
+                    <div class="stat-label">Resolved</div>
+                </div>
+            </div>
+        </header>
+
+        <main class="table-container glass-card">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Reference ID</th>
+                        <th>Citizen</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="deptComplaintsBody">
+                    <!-- Javascript mapped -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/department.js"></script>
+</body>
+</html>

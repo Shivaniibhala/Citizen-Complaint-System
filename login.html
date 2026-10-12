@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitizenPortal - Login</title>
+    <!-- Linking external CSS natively -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/form.css">
+</head>
+<body style="background: var(--bg-body); display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+    
+    <div class="container main-container" style="width: 100%; padding: 0;">
+        
+        <!-- 1. AUTHENTICATION VIEW -->
+        <div id="authView" class="view-section animate-fade-in" style="display: flex; justify-content: center;">
+            <!-- Smart Unified Auth Form -->
+            <div id="unifiedAuthContainer" class="auth-container modern-card">
+                <div class="auth-header">
+                    <div style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h2 class="auth-title" id="authTitle" style="color: var(--text-dark);">Welcome</h2>
+                    <p class="auth-subtitle" id="authSubtitle" style="color: var(--text-muted);">Enter your email to continue</p>
+                </div>
+                <form id="smartAuthForm" class="auth-form">
+                    <!-- Email Step (Always visible initially) -->
+                    <div class="floating-group" id="emailGroup">
+                        <input type="email" id="authEmail" class="input-field" placeholder=" " required>
+                        <label class="floating-label"><i class="fa-regular fa-envelope"></i> Email Address</label>
+                        <span id="emailValidationMsg" style="color: #ef4444; font-size: 0.8rem; margin-top: 5px; display: none;">Invalid email format</span>
+                    </div>
+
+                    <!-- Password Step (Hidden initially, shown for both login and signup) -->
+                    <div class="floating-group hidden" id="passwordGroup">
+                        <input type="password" id="authPassword" class="input-field" placeholder=" ">
+                        <label class="floating-label" id="authPasswordLabel"><i class="fa-solid fa-lock"></i> Password</label>
+                    </div>
+
+                    <!-- Name Step (Hidden initially, shown only for signup) -->
+                    <div class="floating-group hidden" id="nameGroup">
+                        <input type="text" id="authName" class="input-field" placeholder=" ">
+                        <label class="floating-label"><i class="fa-regular fa-user"></i> Full Name</label>
+                    </div>
+
+                    <button type="button" id="btnContinue" class="btn-primary auth-btn">Continue</button>
+                    <button type="submit" id="btnSubmitAuth" class="btn-primary auth-btn hidden">Submit</button>
+                    <button type="button" id="btnBackToEmail" class="btn-secondary auth-btn hidden" style="margin-top: 10px;">Back</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application scripts executing dynamically -->
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

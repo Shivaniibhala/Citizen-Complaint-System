@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitizenPortal - Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.html" class="nav-brand">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    AdminPortal
+                </a>
+            </div>
+            <div class="sidebar-menu">
+                <a href="admin.html" class="nav-link active">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Manage Citizens</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-solid fa-building"></i>
+                    <span>Departments</span>
+                </a>
+                <div style="flex-grow: 1;"></div>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" onclick="window.logout()" class="nav-link" style="color: #ef4444;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP HEADER -->
+            <header class="top-header">
+                <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('active')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-search">
+                    <i class="fa-solid fa-search" style="color: var(--text-muted);"></i>
+                    <input type="text" placeholder="Search by ID or Identity...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">System Admin</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 0.5rem;"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container main-container admin-container animate-fade-in">
+                
+                <header class="header-section" style="margin-bottom: 2rem;">
+                    <h1 class="page-title">Admin Command Center</h1>
+                    <p style="color:var(--text-muted)">Manage and Resolve System Complaints in Real-Time</p>
+                </header>
+
+                <!-- Admin Stats -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card modern-card">
+                        <div class="stat-icon" style="background: #eef2ff; color: #4f46e5;"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="a-stat-info">
+                            <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Total Traffic</h3>
+                            <p class="a-stat-value" id="adTotal" style="font-size: 1.8rem; font-weight: 700; color: var(--text-dark);">0</p>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card modern-card">
+                        <div class="stat-icon" style="background: #fff7ed; color: #ea580c;"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <div class="a-stat-info">
+                            <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Awaiting Action</h3>
+                            <p class="a-stat-value" id="adPending" style="font-size: 1.8rem; font-weight: 700; color: #ea580c;">0</p>
+                        </div>
+                    </div>
+                    <div class="admin-stat-card modern-card">
+                        <div class="stat-icon" style="background: #f0fdf4; color: #16a34a;"><i class="fa-solid fa-check-double"></i></div>
+                        <div class="a-stat-info">
+                            <h3 style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Fully Resolved</h3>
+                            <p class="a-stat-value" id="adResolved" style="font-size: 1.8rem; font-weight: 700; color: #16a34a;">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <main class="dashboard-wrapper modern-card">
+                    <div class="table-container" style="overflow-x: auto;">
+                        <table class="complaints-table" id="complaintsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID & Date</th>
+                                    <th>Identity</th>
+                                    <th>Details & Location</th>
+                                    <th>Priority</th>
+                                    <th>Department</th>
+                                    <th>Status Matrix</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complaintsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal-overlay">
+        <div class="modal-content animate-fade-in">
+            <button class="modal-close" onclick="closeDetailsModal()">&times;</button>
+            <h2 class="modal-title">Complaint Details</h2>
+            <div class="modal-body" id="modalBodyContent">
+                <!-- Content will be injected dynamically -->
+            </div>
+        </div>
+    </div>
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

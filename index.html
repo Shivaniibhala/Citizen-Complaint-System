@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitizenPortal - Dashboard</title>
+    <!-- Linking external CSS natively -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="nav-brand">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    CitizenPortal
+                </a>
+            </div>
+            <div class="sidebar-menu">
+                <a href="index.html" class="nav-link active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" onclick="window.showView('newComplaintView')">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>New Complaint</span>
+                </a>
+                <a href="track.html" class="nav-link">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Track Complaint</span>
+                </a>
+                <a href="#" class="nav-link" onclick="window.showView('dashboardView')">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>My Complaints</span>
+                </a>
+                <div style="flex-grow: 1;"></div>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span>Help & Support</span>
+                </a>
+                <a href="#" onclick="window.logout()" class="nav-link" style="color: #ef4444;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP HEADER -->
+            <header class="top-header">
+                <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('active')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-search">
+                    <i class="fa-solid fa-search" style="color: var(--text-muted);"></i>
+                    <input type="text" placeholder="Search complaints...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="topHeaderName">Citizen</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 0.5rem;"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container main-container">
+
+                <!-- DASHBOARD VIEW -->
+                <div id="dashboardView" class="view-section dashboard-container animate-fade-in">
+                    
+                    <!-- Welcome Card -->
+                    <div class="welcome-card modern-card">
+                        <div class="welcome-content">
+                            <h2>Welcome back, <span id="dashboardUserName" style="color: var(--primary-color);">Citizen</span>! 👋</h2>
+                            <p>Manage and track your civil complaints quickly and easily.</p>
+                            <div class="welcome-actions">
+                                <button id="btnNewComplaint" class="btn-primary"><i class="fa-solid fa-plus"></i> New Complaint</button>
+                                <a href="track.html" class="btn-secondary" style="text-decoration: none;"><i class="fa-solid fa-magnifying-glass"></i> Track Complaint</a>
+                            </div>
+                        </div>
+                        <div class="welcome-illustration">
+                            <!-- Simple pure CSS illustration blocks for SaaS look -->
+                            <div class="ill-building b1"></div>
+                            <div class="ill-building b2"></div>
+                            <div class="ill-building b3"></div>
+                            <div class="ill-cloud c1"></div>
+                            <div class="ill-cloud c2"></div>
+                        </div>
+                    </div>
+
+                    <!-- Layout for Stats and Lists -->
+                    <div class="dashboard-grid">
+                        
+                        <!-- Left Column (Stats + Complaints List) -->
+                        <div class="dashboard-left">
+                            
+                            <div class="stats-grid">
+                                <div class="stat-card modern-card">
+                                    <div class="stat-icon" style="background: #eef2ff; color: #4f46e5;"><i class="fa-solid fa-file-lines"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Total Filed</div>
+                                        <div class="stat-value" id="statTotal">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card modern-card">
+                                    <div class="stat-icon" style="background: #fff7ed; color: #ea580c;"><i class="fa-solid fa-clock"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Pending Review</div>
+                                        <div class="stat-value" id="statPending">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card modern-card">
+                                    <div class="stat-icon" style="background: #eff6ff; color: #2563eb;"><i class="fa-solid fa-spinner"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">In Progress</div>
+                                        <div class="stat-value" id="statInProgress">0</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card modern-card">
+                                    <div class="stat-icon" style="background: #f0fdf4; color: #16a34a;"><i class="fa-solid fa-check-circle"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-label">Resolved Issues</div>
+                                        <div class="stat-value" id="statResolved">0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <section class="my-complaints-section modern-card">
+                                <div class="section-header">
+                                    <h3>My Actionable Complaints</h3>
+                                    <div style="display:flex; gap: 1rem; align-items:center;">
+                                        <select id="filterComplaints" class="filter-select">
+                                            <option value="All">All Status</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="In Progress">In Progress</option>
+                                            <option value="Resolved">Resolved</option>
+                                        </select>
+                                        <button class="icon-btn" style="border:1px solid var(--border-color); padding: 0.4rem 0.6rem; border-radius: var(--border-radius-sm);"><i class="fa-solid fa-filter"></i></button>
+                                    </div>
+                                </div>
+                                <div class="complaints-list" id="myComplaintsList">
+                                    <!-- Complaints mapped dynamically -->
+                                </div>
+                                <div style="text-align: center; margin-top: 1.5rem;">
+                                    <a href="#" class="btn-text" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View All Complaints &rarr;</a>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <!-- Right Column (Quick Help & Notifications) -->
+                        <div class="dashboard-right">
+                            <div class="modern-card quick-help-card">
+                                <h3><i class="fa-regular fa-life-ring" style="color: #ea580c; margin-right: 0.5rem;"></i> Quick Help</h3>
+                                <p>Need assistance? Check our help center or contact support.</p>
+                                <a href="#" class="btn-secondary" style="width: 100%; text-decoration:none; margin-top:1rem; font-size:0.85rem;">Visit Help Center <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            </div>
+
+                            <div class="modern-card notifications-card" style="margin-top: 1.5rem;">
+                                <h3 style="margin-bottom: 1rem;"><i class="fa-regular fa-bell" style="color: var(--primary-color); margin-right: 0.5rem;"></i> Recent Updates</h3>
+                                <div class="notif-list">
+                                    <div class="notif-item">
+                                        <div class="notif-icon" style="color: #16a34a;"><i class="fa-solid fa-circle-check"></i></div>
+                                        <div class="notif-text">
+                                            <p>Your complaint <strong>CMP-004804</strong> has been resolved.</p>
+                                            <span class="notif-time">Today, 10:30 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="notif-item">
+                                        <div class="notif-icon" style="color: #2563eb;"><i class="fa-solid fa-circle-info"></i></div>
+                                        <div class="notif-text">
+                                            <p>Complaint <strong>CMP-004806</strong> status changed to In Progress.</p>
+                                            <span class="notif-time">Yesterday, 02:15 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                                    <a href="#" class="btn-text" style="color: var(--primary-color); text-decoration: none; font-size:0.9rem; font-weight: 500;">View All Notifications &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- NEW COMPLAINT VIEW -->
+                <div id="newComplaintView" class="view-section hidden animate-fade-in">
+                    <header class="header-section" style="margin-bottom: 2rem;">
+                        <h1 class="page-title">Register Your Complaint</h1>
+                        <p class="page-subtitle" style="color: var(--text-muted);">Help us improve public services by reporting issues</p>
+                    </header>
+
+                    <main class="form-wrapper modern-card">
+                        <form id="complaintForm" class="complaint-form">
+
+                            <h3 class="form-section-title"><i class="fa-regular fa-id-badge"></i> Personal Info</h3>
+                            <div class="form-row">
+                                <div class="floating-group">
+                                    <input type="text" id="fullName" name="fullName" class="input-field" placeholder=" " required>
+                                    <label for="fullName" class="floating-label">Full Name <span class="required">*</span></label>
+                                </div>
+
+                                <div class="floating-group">
+                                    <input type="email" id="email" name="email" class="input-field" placeholder=" " required>
+                                    <label for="email" class="floating-label">Email Address <span class="required">*</span></label>
+                                </div>
+                            </div>
+
+                            <div class="floating-group">
+                                <input type="tel" id="phone" name="phone" class="input-field" placeholder=" ">
+                                <label for="phone" class="floating-label">Phone Number <span class="optional">(Optional)</span></label>
+                            </div>
+
+                            <h3 class="form-section-title" style="margin-top: 2rem;"><i class="fa-regular fa-file-lines"></i> Complaint Details</h3>
+                            <div class="floating-group">
+                                <select id="category" name="category" class="input-field" required>
+                                    <option value="" disabled selected hidden>Select a category</option>
+                                    <option value="Road Issues">Road Issues</option>
+                                    <option value="Water Supply">Water Supply</option>
+                                    <option value="Electricity">Electricity</option>
+                                    <option value="Garbage/Waste">Garbage/Waste</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label for="category" class="floating-label" style="top: -10px; font-size: 0.8rem;">Complaint Category <span class="required">*</span></label>
+                            </div>
+
+                            <div class="floating-group">
+                                <input type="text" id="complaintTitle" name="complaintTitle" class="input-field" placeholder=" " required>
+                                <label for="complaintTitle" class="floating-label">Complaint Title <span class="required">*</span></label>
+                            </div>
+
+                            <div class="floating-group" style="margin-bottom:0.5rem;">
+                                <textarea id="detailedDescription" name="detailedDescription" class="input-field" rows="5" placeholder=" " required></textarea>
+                                <label for="detailedDescription" class="floating-label">Detailed Description <span class="required">*</span></label>
+                                <span class="char-counter" id="descCounter" style="float: right; font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">0 / 500</span>
+                            </div>
+                            <div style="clear: both; margin-bottom: 1.5rem;"></div>
+
+                            <h3 class="form-section-title"><i class="fa-solid fa-location-dot"></i> Location Info</h3>
+
+                            <div class="form-group location-section">
+                                <label style="display:block; margin-bottom: 0.5rem; font-weight: 500;">Location Details <span class="required">*</span></label>
+                                <div style="display:flex; gap:1rem; align-items:center; flex-wrap: wrap;">
+                                    <button type="button" id="useLocationBtn" class="btn-secondary"><i class="fa-solid fa-location-crosshairs"></i> Use Current Location</button>
+                                    <span id="coordsDisplay" style="color:var(--text-muted); font-size:0.85rem; padding:0.5rem 1rem; background:var(--secondary-color); border-radius:var(--border-radius-sm);">Coordinates: Not retrieved yet</span>
+                                </div>
+                            </div>
+
+                            <div class="floating-group" style="margin-top: 1.5rem;">
+                                <input type="text" id="addressInput" name="address" class="input-field" placeholder=" ">
+                                <label for="addressInput" class="floating-label">Address / Landmark (or use Current Location)</label>
+                            </div>
+
+                            <div class="form-group image-upload-section" style="margin-top: 1.5rem;">
+                                <label style="margin-bottom:0.5rem; display:block; font-weight: 500;">Image Evidence <span class="optional">(Optional)</span></label>
+                                <div class="upload-area">
+                                    <input type="file" id="imageUpload" name="imageUpload" class="file-input" accept="image/*" multiple>
+                                    <div class="upload-placeholder">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <p>Drag and drop or click to select files</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group priority-section" style="margin-top: 1.5rem;">
+                                <label style="margin-bottom:0.5rem; display:block; font-weight: 500;">Priority Selection <span class="required">*</span></label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="priority" value="low" required> Low
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="priority" value="medium"> Medium
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="priority" value="high"> High
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                                <button type="button" id="btnCancelComplaint" class="btn-secondary reset-btn">Cancel</button>
+                                <button type="submit" class="btn-primary submit-btn"><i class="fa-solid fa-paper-plane"></i> Submit Complaint</button>
+                            </div>
+
+                        </form>
+                    </main>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Application scripts executing dynamically -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuyr9pGuvHHQSoc7RH4aI9rJR-Zb4OacM-&libraries=places&callback=initMap" async defer></script>
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/form.js"></script>
+    <script>
+        // Set top header name
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if(currentUser) {
+                const el = document.getElementById('topHeaderName');
+                if(el) el.textContent = currentUser.name;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitizenPortal - Track Complaint</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/track.css">
+</head>
+<body>
+    
+    <div class="app-layout">
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="nav-brand">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    CitizenPortal
+                </a>
+            </div>
+            <div class="sidebar-menu">
+                <a href="index.html" class="nav-link">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="index.html" class="nav-link">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>New Complaint</span>
+                </a>
+                <a href="track.html" class="nav-link active">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Track Complaint</span>
+                </a>
+                <a href="index.html" class="nav-link">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>My Complaints</span>
+                </a>
+                <div style="flex-grow: 1;"></div>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span>Help & Support</span>
+                </a>
+                <a href="#" onclick="window.logout()" class="nav-link" style="color: #ef4444;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP HEADER -->
+            <header class="top-header">
+                <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('active')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-search">
+                    <i class="fa-solid fa-search" style="color: var(--text-muted);"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="topHeaderName">Citizen</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" style="color: var(--text-muted); font-size: 0.8rem; margin-left: 0.5rem;"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container main-container">
+                <div class="track-wrapper animate-fade-in modern-card">
+                    <header class="header-section" style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h1 class="page-title">Track Your Complaint</h1>
+                        <p class="page-subtitle" style="color: var(--text-muted);">Verify the ongoing status using your Ticket ID</p>
+                    </header>
+
+                    <div class="track-search-section">
+                        <div style="position: relative; width: 100%; max-width: 500px;">
+                            <i class="fa-solid fa-ticket" style="position: absolute; left: 1.2rem; top: 1.2rem; color: var(--text-muted);"></i>
+                            <input type="text" id="trackIdInput" class="block-input" placeholder="Enter Complaint ID (e.g. CMP-...)" style="padding-left: 3rem;">
+                        </div>
+                        <button id="btnTrack" class="btn-primary track-btn"><i class="fa-solid fa-magnifying-glass"></i> Lookup</button>
+                    </div>
+
+                    <div id="trackResult" class="result-card hidden" style="margin-top: 3rem;">
+                        <h3 class="result-heading" style="margin-bottom: 1.5rem; color: var(--text-dark); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Complaint Details</h3>
+                        <div class="result-grid">
+                            <div class="res-item">
+                                <span class="res-label">CITIZEN IDENTITY</span>
+                                <span class="res-value" id="rName">--</span>
+                            </div>
+                            <div class="res-item">
+                                <span class="res-label">CATEGORIZATION</span>
+                                <span class="res-value" id="rCategory">--</span>
+                            </div>
+                            <div class="res-item">
+                                <span class="res-label">DEPARTMENT</span>
+                                <span class="res-value" id="rDepartment">--</span>
+                            </div>
+                            <div class="res-item">
+                                <span class="res-label">LOCATION</span>
+                                <span class="res-value" id="rLocation">--</span>
+                            </div>
+                            <div class="res-item">
+                                <span class="res-label">SUBMITTED ON</span>
+                                <span class="res-value" id="rDate">--</span>
+                            </div>
+                            <div class="res-item">
+                                <span class="res-label">FINAL DECISION</span>
+                                <span class="badge" id="rStatus" style="width: max-content;">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Tracker UI -->
+                        <div class="track-timeline">
+                            <div class="timeline-line"></div>
+                            <div class="timeline-step" id="stepPending">
+                                <div class="t-dot"><i class="fa-solid fa-clock"></i></div>
+                                <span class="t-label">PENDING</span>
+                            </div>
+                            
+                            <div class="timeline-step" id="stepInProgress">
+                                <div class="t-dot"><i class="fa-solid fa-spinner"></i></div>
+                                <span class="t-label">IN PROGRESS</span>
+                            </div>
+                            
+                            <div class="timeline-step" id="stepResolved">
+                                <div class="t-dot"><i class="fa-solid fa-check"></i></div>
+                                <span class="t-label">RESOLVED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application scripts executing dynamically -->
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/track.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if(currentUser) {
+                const el = document.getElementById('topHeaderName');
+                if(el) el.textContent = currentUser.name;
+            }
+        });
+    </script>
+</body>
+</html>
